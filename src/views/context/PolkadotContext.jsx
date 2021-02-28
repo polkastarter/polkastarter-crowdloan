@@ -2,6 +2,7 @@ import React, {useState, useContext, useEffect} from 'react'
 import keyring from '@polkadot/ui-keyring'
 import {connect, loadAccounts} from '../../services/polkadot'
 import {transfer} from '../../services/balance'
+import {toNumber} from 'services/utils'
 
 const PolkadotContext = React.createContext()
 
@@ -34,7 +35,22 @@ export const PolkadotContextProvider = props => {
     run()
   }, [])
 
+  useEffect(() => {
+    const {api, loaded} = state
+    let unsub
 
+    const run = async () => {
+      unsub = await api.rpc.chain.subscribeNewHeads(async lastHeader => {
+        setState({...state, blockNumber: toNumber(lastHeader.number)})
+      })
+    }
+
+    loaded && run()
+
+    return () => {
+      unsub && unsub()
+    }
+  }, [state.loaded])
 
   return (
     <PolkadotContext.Provider value={state}>
