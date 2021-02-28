@@ -1,4 +1,4 @@
-export const signAndSend = (tx, fromPair) => new Promise(async resolve => {
+export const signAndSend = (fromPair, tx) => new Promise(async resolve => {
   const unsub = await tx.signAndSend(fromPair, data => {
     const {status} = data
     console.log('Transaction status:', status.type)
@@ -24,7 +24,7 @@ const getErrors = (api, events) => events
 export const hasErrors = (api, txResult) => getErrors(api, txResult.events).length > 0
 
 export const decodeEvents = (api, txResult) => {
-  
+
 }
 
 export const decodeErrors = (api, txResult) => {

@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {useForm, Controller} from 'react-hook-form'
-import {web3FromSource} from '@polkadot/extension-dapp'
 import InputBase from '@material-ui/core/InputBase'
 import GridItem from "components/Grid/GridItem.js"
 import GridContainer from "components/Grid/GridContainer.js"
@@ -11,12 +10,13 @@ import CardBody from "components/Card/CardBody.js"
 import CardFooter from "components/Card/CardFooter.js"
 import {usePolkadot} from 'views/context/PolkadotContext'
 import AsyncButton from 'components/AsyncButton'
-import {signAndSend, decodeErrors} from 'services/tx'
-import {toNumber, toPlunk} from 'services/utils'
+import useWallet from 'hooks/useWallet'
+import {toPlunk} from 'services/utils'
 
 const CreateCrowdloan = props => {
-  const {api, accountPairs} = usePolkadot()
+  const {api} = usePolkadot()
   const [loading, setLoading] = useState(false)
+  const {signAndSend, decodeErrors} = useWallet()
   const {register, handleSubmit, control} = useForm()
 
   const submitTransaction = async data => {
@@ -27,21 +27,7 @@ const CreateCrowdloan = props => {
       lastSlot,
       end
     } = data
-    const accountPair = accountPairs[accountPairs.length - 1]
-    const {
-      address,
-      meta: {source, isInjected}
-    } = accountPair
-
-    if (isInjected) {
-      const injected = await web3FromSource(source)
-      api.setSigner(injected.signer)
-    }
-
-    // const txExecute = transformed
-    //   ? api.tx[palletRpc][callable](...transformed)
-    //   : api.tx[palletRpc][callable]();
-
+  
     const txResult = await signAndSend(
       api.tx.crowdloan.create(
         toPlunk(cap),
@@ -49,11 +35,15 @@ const CreateCrowdloan = props => {
         lastSlot,
         end,
         null
-      ),
-      address
+      )
     )
 
     const errors = await decodeErrors(api, txResult)
+
+    if(errors.length > 0) {
+      console.log(errors)
+    }
+
     setLoading(false)
   }
 
