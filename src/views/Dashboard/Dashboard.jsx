@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 // react plugin for creating charts
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,12 +21,41 @@ import CardFooter from "components/Card/CardFooter.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import {usePolkadot} from '../context/PolkadotContext'
 import CreateCrowdloan from './CreateCrowdloan'
+import {toNumber} from 'services/utils'
+import {getFundCount} from 'services/crowdloan'
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
-  const classes = useStyles();
-  const state = usePolkadot()
+  const [blockNumber, setBlockNumber] = useState('')
+  const [fundCount, setFundCount] = useState('')
+  const classes = useStyles()
+  const {api, loaded} = usePolkadot()
+
+  useEffect(() => {
+    let unsub
+
+    const run = async () => {
+      unsub = await api.rpc.chain.subscribeNewHeads(lastHeader => {
+        setBlockNumber(toNumber(lastHeader.number))
+      })
+    }
+
+    loaded && run()
+
+    return () => {
+      unsub && unsub()
+    }
+  }, [loaded])
+
+  useEffect(() => {
+    const run = async () => {
+      const count = await getFundCount(api)
+      setFundCount(toNumber(count))
+    }
+
+    loaded && run()
+  }, [loaded])
 
   return (
     <div>
@@ -37,16 +66,11 @@ export default function Dashboard() {
               <CardIcon color="warning">
                 <Icon>content_copy</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Number of Crowdloans</p>
+              <p className={classes.cardCategory}>Campaigns</p>
               <h3 className={classes.cardTitle}>
-                49/50 <small>GB</small>
+                {fundCount}
               </h3>
             </CardHeader>
-            <CardFooter stats>
-              <div className={classes.stats}>
-                Create Crowdload
-              </div>
-            </CardFooter>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
@@ -55,49 +79,9 @@ export default function Dashboard() {
               <CardIcon color="success">
                 <Store />
               </CardIcon>
-              <p className={classes.cardCategory}>Total Raised</p>
-              <h3 className={classes.cardTitle}>$34,245</h3>
+              <p className={classes.cardCategory}>Current Block</p>
+              <h3 className={classes.cardTitle}>{blockNumber}</h3>
             </CardHeader>
-            <CardFooter stats>
-              <div className={classes.stats}>
-                <DateRange />
-                Last 24 Hours
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={6} md={3}>
-          <Card>
-            <CardHeader color="danger" stats icon>
-              <CardIcon color="danger">
-                <Icon>info_outline</Icon>
-              </CardIcon>
-              <p className={classes.cardCategory}>Fixed Issues</p>
-              <h3 className={classes.cardTitle}>75</h3>
-            </CardHeader>
-            <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={6} md={3}>
-          <Card>
-            <CardHeader color="info" stats icon>
-              <CardIcon color="info">
-                <Accessibility />
-              </CardIcon>
-              <p className={classes.cardCategory}>Followers</p>
-              <h3 className={classes.cardTitle}>+245</h3>
-            </CardHeader>
-            <CardFooter stats>
-              <div className={classes.stats}>
-                <Update />
-                Just Updated
-              </div>
-            </CardFooter>
           </Card>
         </GridItem>
         <GridItem>

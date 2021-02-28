@@ -26,7 +26,8 @@ export const PolkadotContextProvider = props => {
     
       setState({
         api,
-        accountPairs
+        accountPairs,
+        loaded: true
       })
     }
 

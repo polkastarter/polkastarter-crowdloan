@@ -12,6 +12,7 @@ import CardFooter from "components/Card/CardFooter.js"
 import {usePolkadot} from 'views/context/PolkadotContext'
 import AsyncButton from 'components/AsyncButton'
 import {signAndSend, decodeErrors} from 'services/tx'
+import {toNumber, toPlunk} from 'services/utils'
 
 const CreateCrowdloan = props => {
   const {api, accountPairs} = usePolkadot()
@@ -43,7 +44,7 @@ const CreateCrowdloan = props => {
 
     const txResult = await signAndSend(
       api.tx.crowdloan.create(
-        cap,
+        toPlunk(cap),
         firstSlot,
         lastSlot,
         end,
@@ -53,8 +54,6 @@ const CreateCrowdloan = props => {
     )
 
     const errors = await decodeErrors(api, txResult)
-    console.log('>>>>>>>>', errors)
-
     setLoading(false)
   }
 

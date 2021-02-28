@@ -23,6 +23,10 @@ const getErrors = (api, events) => events
 
 export const hasErrors = (api, txResult) => getErrors(api, txResult.events).length > 0
 
+export const decodeEvents = (api, txResult) => {
+  
+}
+
 export const decodeErrors = (api, txResult) => {
     return getErrors(api, txResult.events)
       .map(({event: {data: [error, info]}}) => {
