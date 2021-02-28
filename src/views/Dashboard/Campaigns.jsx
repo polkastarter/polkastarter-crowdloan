@@ -6,7 +6,7 @@ const Campaigns = props => {
 
   return (
     new Array(fundCount).fill().map((_, i) => (
-      <Campaign fundIndex={i} />
+      <Campaign key={i} fundIndex={i} />
     ))
   )
 }

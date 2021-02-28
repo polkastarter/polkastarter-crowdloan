@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useForm, Controller} from 'react-hook-form'
+import {compactFromU8a, numberToU8a} from '@polkadot/util'
 import InputBase from '@material-ui/core/InputBase'
 import GridItem from "components/Grid/GridItem.js"
 import GridContainer from "components/Grid/GridContainer.js"

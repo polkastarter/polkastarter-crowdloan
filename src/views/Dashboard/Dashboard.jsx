@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Store from "@material-ui/icons/Store";
+import {formatBalance} from '@polkadot/util'
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -45,7 +46,7 @@ export default function Dashboard() {
     const run = async () => {
       const accountPair = accountPairs[accountPairs.length - 1]
       unsub = await listenBalanceChange(api, accountPair.address, balance => {
-        setBalance(fromPlunk(toNumber(balance)))
+        setBalance(formatBalance(toNumber(balance), {unit: 'unit'}))
       })
     }
 
