@@ -9,7 +9,9 @@ export const PolkadotContextProvider = props => {
   useEffect(() => {
     const run = async () => {
       const api = await connect()
-      const accounts = loadAccounts()
+      await loadAccounts()
+
+      setState({api})
     }
 
     run()
