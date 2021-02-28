@@ -20,13 +20,13 @@ import CardFooter from "components/Card/CardFooter.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import {usePolkadot} from '../context/PolkadotContext'
+import CreateCrowdloan from './CreateCrowdloan'
+
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
   const state = usePolkadot()
-
-  console.log('>>>>>>>>', state)
 
   return (
     <div>
@@ -99,6 +99,9 @@ export default function Dashboard() {
               </div>
             </CardFooter>
           </Card>
+        </GridItem>
+        <GridItem>
+          <CreateCrowdloan />
         </GridItem>
       </GridContainer>
     </div>

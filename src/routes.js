@@ -17,7 +17,7 @@
 */
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import DashboardPage from "views/Dashboard/Dashboard.js";
+import DashboardPage from "views/Dashboard/Dashboard";
 
 const dashboardRoutes = [
   {

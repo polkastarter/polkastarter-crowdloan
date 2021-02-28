@@ -20,5 +20,6 @@ export const loadAccounts = async () => {
       } 
     }))
 
+  
   await keyring.loadAll({isDevelopment: config.DEVELOPMENT_KEYRING}, allAccounts)
 }
