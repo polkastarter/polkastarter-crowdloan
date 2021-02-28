@@ -21,7 +21,8 @@ import CardFooter from "components/Card/CardFooter.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import {usePolkadot} from '../context/PolkadotContext'
 import CreateCrowdloan from './CreateCrowdloan'
-import {toNumber} from 'services/utils'
+import {toNumber, fromPlunk} from 'services/utils'
+import {listenBalanceChange} from 'services/balance'
 import {getFundCount} from 'services/crowdloan'
 
 const useStyles = makeStyles(styles);
@@ -29,15 +30,19 @@ const useStyles = makeStyles(styles);
 export default function Dashboard() {
   const [blockNumber, setBlockNumber] = useState('')
   const [fundCount, setFundCount] = useState('')
+  const [balance, setBalance] = useState('')
   const classes = useStyles()
-  const {api, loaded} = usePolkadot()
+  const {api, accountPairs, loaded} = usePolkadot()
 
   useEffect(() => {
     let unsub
 
     const run = async () => {
-      unsub = await api.rpc.chain.subscribeNewHeads(lastHeader => {
+      unsub = await api.rpc.chain.subscribeNewHeads(async lastHeader => {
         setBlockNumber(toNumber(lastHeader.number))
+
+        const count = await getFundCount(api)
+        setFundCount(toNumber(count))
       })
     }
 
@@ -49,17 +54,36 @@ export default function Dashboard() {
   }, [loaded])
 
   useEffect(() => {
+    let unsub
+
     const run = async () => {
-      const count = await getFundCount(api)
-      setFundCount(toNumber(count))
+      const accountPair = accountPairs[accountPairs.length - 1]
+      unsub = await listenBalanceChange(api, accountPair.address, balance => {
+        setBalance(fromPlunk(toNumber(balance)))
+      })
     }
 
     loaded && run()
-  }, [loaded])
+
+    return () => {
+      unsub && unsub()
+    }
+  }, [loaded])  
 
   return (
     <div>
       <GridContainer>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>info_outline</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>Balance</p>
+              <h3 className={classes.cardTitle}>{balance}</h3>
+            </CardHeader>
+          </Card>
+        </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
