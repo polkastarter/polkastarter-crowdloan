@@ -17,7 +17,6 @@
 */
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import AccountBox from "@material-ui/icons/AccountBox";
 import DashboardPage from "views/Dashboard/Dashboard";
 
 const dashboardRoutes = [
