@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import {useForm, Controller} from 'react-hook-form'
 import {formatBalance, formatNumber} from '@polkadot/util'
 import InputBase from '@material-ui/core/InputBase'
@@ -18,7 +18,11 @@ import AsyncButton from 'components/AsyncButton'
 import useWallet from 'hooks/useWallet'
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles)
+
+// for million, 2 * 3-grouping + comma
+const M_LENGTH = 6 + 1
+const K_LENGTH = 3 + 1
 
 const Campaign = props => {
   const {fundIndex} = props
@@ -62,11 +66,50 @@ const Campaign = props => {
     setLoading(false)
   }
 
+  const formatDisplay = (prefix, postfix, unit, label = '', isShort=false) => {
+    return <>{`${prefix}${isShort ? '' : '.'}`}{!isShort && <span className='ui--FormatBalance-postfix'>{`0000${postfix || ''}`.slice(-4)}</span>}<span className='ui--FormatBalance-unit'> {unit}</span>{label}</>;
+  }
+
+  const getFormat = (registry, formatIndex = 0) => {
+    const decimals = registry.chainDecimals
+    const tokens = registry.chainTokens
+  
+    return [
+      formatIndex < decimals.length
+        ? decimals[formatIndex]
+        : decimals[0],
+      formatIndex < tokens.length
+        ? tokens[formatIndex]
+        : tokens[1]
+    ]
+  }
+
+  const formatInfo = useMemo(
+    () => getFormat(api.registry, 0),
+    [api, 0]
+  )
+
+  const format = (value, [decimals, token], withCurrency = true, withSi, _isShort, labelPost) =>  {
+    const [prefix, postfix] = formatBalance(value, { decimals, forceUnit: '-', withSi: false }).split('.')
+    const isShort = _isShort || (withSi && prefix.length >= K_LENGTH)
+    const unitPost = withCurrency ? token : ''
+  
+    if (prefix.length > M_LENGTH) {
+      const [major, rest] = formatBalance(value, { decimals, withUnit: false }).split('.')
+      const minor = rest.substr(0, 4)
+      const unit = rest.substr(4)
+  
+      return <>{major}.<span className='ui--FormatBalance-postfix'>{minor}</span><span className='ui--FormatBalance-unit'>{unit}{unit ? unitPost : ` ${unitPost}`}</span>{labelPost || ''}</>
+    }
+  
+    return formatDisplay(prefix, postfix, unitPost, labelPost, isShort)
+  }
+
   const getOwner = () => fundInfo && fundInfo['owner'].toString()
-  const getCap = () => fundInfo && formatBalance(fundInfo['cap'])
-  const getEnd = () => fundInfo && fundInfo['end'] / 256
-  const getFirstSlot = () => fundInfo && fundInfo['firstSlot'] / 256
-  const getLastSlot = () => fundInfo && fundInfo['lastSlot'] / 256
+  const getCap = () => fundInfo && format(fundInfo['cap'], formatInfo)
+  const getEnd = () => fundInfo && fundInfo['end'].toString()
+  const getFirstSlot = () => fundInfo && fundInfo['firstSlot'].toString()
+  const getLastSlot = () => fundInfo && fundInfo['lastSlot'].toString()
 
   const renderContributeForm = () => (
     <GridContainer>
