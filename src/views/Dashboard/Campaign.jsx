@@ -64,9 +64,9 @@ const Campaign = props => {
 
   const getOwner = () => fundInfo && fundInfo['owner'].toString()
   const getCap = () => fundInfo && formatBalance(fundInfo['cap'])
-  const getEnd = () => fundInfo && fundInfo['end']
-  const getFirstSlot = () => fundInfo && fundInfo['firstSlot']
-  const getLastSlot = () => fundInfo && fundInfo['lastSlot']
+  const getEnd = () => fundInfo && fundInfo['end'].toString()
+  const getFirstSlot = () => fundInfo && fundInfo['firstSlot'].toString()
+  const getLastSlot = () => fundInfo && fundInfo['lastSlot'].toString()
 
   const renderContributeForm = () => (
     <GridContainer>
