@@ -6,19 +6,20 @@ import GridItem from "components/Grid/GridItem.js"
 import GridContainer from "components/Grid/GridContainer.js"
 import Card from "components/Card/Card.js"
 import CardHeader from "components/Card/CardHeader.js"
-import CardAvatar from "components/Card/CardAvatar.js"
 import CardBody from "components/Card/CardBody.js"
 import CardFooter from "components/Card/CardFooter.js"
 import {usePolkadot} from 'views/context/PolkadotContext'
 import AsyncButton from 'components/AsyncButton'
 import useWallet from 'hooks/useWallet'
 import {toPlunk} from 'services/utils'
+import Notification from 'components/Notification'
 
 const CreateCrowdloan = props => {
   const {api} = usePolkadot()
   const [loading, setLoading] = useState(false)
+  const [notification, setNotification] = useState({})
   const {signAndSend, decodeErrors} = useWallet()
-  const {register, handleSubmit, control} = useForm()
+  const {register, handleSubmit, control, reset} = useForm()
 
   const submitTransaction = async data => {
     setLoading(true)
@@ -29,29 +30,47 @@ const CreateCrowdloan = props => {
       end
     } = data
   
-    const txResult = await signAndSend(
-      api.tx.crowdloan.create(
-        toPlunk(cap),
-        firstSlot,
-        lastSlot,
-        end,
-        null
+    try {
+      const txResult = await signAndSend(
+        api.tx.crowdloan.create(
+          toPlunk(cap),
+          firstSlot,
+          lastSlot,
+          end,
+          null
+        )
       )
-    )
 
-    const errors = await decodeErrors(api, txResult)
-
-    if(errors.length > 0) {
-      console.log(errors)
+      const errors = await decodeErrors(api, txResult)
+      if(errors.length > 0) {
+        setNotification({
+          message: `Error while creating a new campaign ${errors[0].message || errors[0]}`,
+          type: 'error'
+        })
+      }
+      else {
+        setNotification({
+          message: `Successfully created a new campaign`,
+          type: 'info'
+        })
+      }
     }
-
-    setLoading(false)
+    catch(error) {
+      setNotification({
+        message: `Error while creating a new campaign ${error.message}`,
+        type: 'error'
+      })
+    }
+    finally{
+      setLoading(false)
+      reset({cap: '', firstSlot: '', lastSlot: '', end: ''})
+    }
   }
 
   return (
     <GridContainer>
       <Card>
-        <CardHeader color="primary">
+        <CardHeader style={{backgroundColor: '#212112', color: '#fff'}}>
           <h4>Create Crowdloan Campaign</h4>
         </CardHeader>
         <CardBody>
@@ -127,6 +146,11 @@ const CreateCrowdloan = props => {
           </AsyncButton>
         </CardFooter>
       </Card>
+      <Notification
+        onClose={() => setNotification({})}
+        message={notification.message}
+        type={notification.type}
+      />
     </GridContainer>
   )
 }

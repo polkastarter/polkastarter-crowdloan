@@ -1,19 +1,24 @@
-export const signAndSend = (fromPair, tx) => new Promise(async resolve => {
-  const unsub = await tx.signAndSend(fromPair, data => {
-    const {status} = data
-    console.log('Transaction status:', status.type)
+export const signAndSend = (fromPair, tx) => new Promise(async (resolve, reject) => {
+  try {
+    const unsub = await tx.signAndSend(fromPair, data => {
+      const {status} = data
+      console.log('Transaction status:', status.type)
 
-    if (status.isInBlock) {
-      console.log('Included at block hash', status.asInBlock.toHex())
-    }
-    else if (status.isFinalized) {
-      const blockHash = status.asFinalized.toHex()
-      console.log('Finalized block hash', blockHash)
-    
-      unsub()
-      resolve(data)
-    }
-  })
+      if (status.isInBlock) {
+        console.log('Included at block hash', status.asInBlock.toHex())
+      }
+      else if (status.isFinalized) {
+        const blockHash = status.asFinalized.toHex()
+        console.log('Finalized block hash', blockHash)
+      
+        unsub()
+        resolve(data)
+      }
+    })
+  }
+  catch(error) {
+    reject(error)
+  }
 })
 
 const getErrors = (api, events) => events

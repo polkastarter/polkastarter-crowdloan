@@ -17,6 +17,7 @@ import {
 
 const sidebarStyle = theme => ({
   drawerPaper: {
+    backgroundColor: '#ff3465',
     border: "none",
     position: "fixed",
     top: "0",
@@ -77,7 +78,8 @@ const sidebarStyle = theme => ({
   },
   logoLink: {
     ...defaultFont,
-    textTransform: "uppercase",
+    fontWeight: 'bold',
+    // textTransform: "uppercase",
     padding: "5px 0",
     display: "block",
     fontSize: "18px",
@@ -154,6 +156,7 @@ const sidebarStyle = theme => ({
     display: "block",
     padding: "10px 15px",
     backgroundColor: "transparent",
+    color: '#212112',
     ...defaultFont
   },
   itemIcon: {
@@ -194,7 +197,7 @@ const sidebarStyle = theme => ({
     }
   },
   blue: {
-    backgroundColor: infoColor[0],
+    backgroundColor: '#212112',
     boxShadow:
       "0 12px 20px -10px rgba(" +
       hexToRgb(infoColor[0]) +
@@ -204,14 +207,14 @@ const sidebarStyle = theme => ({
       hexToRgb(infoColor[0]) +
       ",.2)",
     "&:hover,&:focus": {
-      backgroundColor: infoColor[0],
+      backgroundColor: '#3d3d35',
       boxShadow:
         "0 12px 20px -10px rgba(" +
-        hexToRgb(infoColor[0]) +
+        hexToRgb('#3d3d35') +
         ",.28), 0 4px 20px 0 rgba(" +
         hexToRgb(blackColor) +
         ",.12), 0 7px 8px -5px rgba(" +
-        hexToRgb(infoColor[0]) +
+        hexToRgb('#3d3d35') +
         ",.2)"
     }
   },

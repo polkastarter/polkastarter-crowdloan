@@ -12,18 +12,21 @@ import CardFooter from "components/Card/CardFooter.js"
 import CardIcon from "components/Card/CardIcon.js"
 import CardBody from "components/Card/CardBody.js"
 import {getFund} from 'services/crowdloan'
-import {toNumber, toPlunk} from 'services/utils'
+import {toUnit, toPlunk, bn, normalizeNumericValue} from 'services/utils'
 import {usePolkadot} from 'views/context/PolkadotContext'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import AsyncButton from 'components/AsyncButton'
 import useWallet from 'hooks/useWallet'
+import Notification from 'components/Notification'
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 
 const useStyles = makeStyles(styles);
 
 const Campaign = props => {
   const {fundIndex} = props
-  const {register, handleSubmit, control} = useForm()
+  const {register, handleSubmit, control, reset} = useForm()
   const [fundInfo, setFundInfo] = useState()
+  const [notification, setNotification] = useState({})
   const [loading, setLoading] = useState(false)
   const {api, blockNumber} = usePolkadot()
   const {signAndSend, decodeErrors} = useWallet()
@@ -38,35 +41,54 @@ const Campaign = props => {
     run()
   }, [blockNumber])
 
-  const getRaised = () => fundInfo && formatBalance(fundInfo['raised'])
+  const getRaised = () => fundInfo && toUnit(normalizeNumericValue(fundInfo['raised']))
 
   const submitTransaction = async data => {
-    setLoading(true)
-    const {amount} = data
-    
-    const txResult = await signAndSend(
-      api.tx.crowdloan.contribute(
-        fundIndex,
-        toPlunk(amount),
-        null
+    try {
+      setLoading(true)
+      const {amount} = data
+      
+      const txResult = await signAndSend(
+        api.tx.crowdloan.contribute(
+          fundIndex,
+          toPlunk(amount),
+          null
+        )
       )
-    )
 
-    const errors = await decodeErrors(api, txResult)
+      const errors = await decodeErrors(api, txResult)
 
-    if(errors.length > 0) {
-      console.log(errors)
+      if(errors.length > 0) {
+        setNotification({
+          message: `Error while contributing to the campaign ${errors[0].message || errors[0]}`,
+          type: 'error'
+        })
+      }
+      else {
+        setNotification({
+          message: `You contribution has been deposited`,
+          type: 'info'
+        })
+      }
+    }
+    catch(error) {
+      setNotification({
+        message: `Error while contributing to the campaign ${error.message}`,
+        type: 'error'
+      })
+    }
+    finally {
+      setLoading(false)
+      reset({amount: ''})
     }
 
-
-    setLoading(false)
   }
 
   const getOwner = () => fundInfo && fundInfo['owner'].toString()
-  const getCap = () => fundInfo && formatBalance(fundInfo['cap'])
-  const getEnd = () => fundInfo && fundInfo['end'].toString()
-  const getFirstSlot = () => fundInfo && fundInfo['firstSlot'].toString()
-  const getLastSlot = () => fundInfo && fundInfo['lastSlot'].toString()
+  const getCap = () => fundInfo && toUnit(normalizeNumericValue(fundInfo['cap']))
+  const getEnd = () => fundInfo && normalizeNumericValue(fundInfo['end']).toString()
+  const getFirstSlot = () => fundInfo && normalizeNumericValue(fundInfo['firstSlot']).toString()
+  const getLastSlot = () => fundInfo && normalizeNumericValue(fundInfo['lastSlot']).toString()
 
   const renderContributeForm = () => (
     <GridContainer>
@@ -100,9 +122,9 @@ const Campaign = props => {
     <GridContainer>
       <GridItem xs={12}>
         <Card>
-          <CardHeader color="danger" stats icon>
-            <CardIcon color="danger">
-              <Icon>info_outline</Icon>
+          <CardHeader stats icon>
+            <CardIcon color="info">
+              <AddCircleOutlineIcon />
             </CardIcon>
             <p className={classes.cardCategory}>Raised</p>
             <h3 className={classes.cardTitle}>{getRaised()}</h3>
@@ -131,6 +153,11 @@ const Campaign = props => {
           </CardFooter>
         </Card>
       </GridItem>
+      <Notification
+        onClose={() => setNotification({})}
+        message={notification.message}
+        type={notification.type}
+      />
     </GridContainer>
   )
 }
