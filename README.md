@@ -34,10 +34,11 @@ This is the function that allows anyone to create a new crowdloan campaign.
 
 Parameters:
 
-1. **cap**: the total amount to be raised
-2. **firstSlot**: First slot in range to bid on
-3. **lastSlot**: Last slot in range to bid on
-4. **end:**  Block number after which the funding must have succeeded. If not successful at this number then everyone may withdraw their funds.
+1. **paraId**: the id of the registered parachain for which the campaign will be created
+2. **cap**: the total amount to be raised
+3. **firstSlot**: First slot in range to bid on
+4. **lastSlot**: Last slot in range to bid on
+5. **end:**  Block number after which the funding must have succeeded. If not successful at this number then everyone may withdraw their funds.
 5. **verifier:** An optional verifier. If exists, contributions must be signed by verifier.
 
 Note that there is a restriction in the code about the values of firstSlot and lastSlot. Basically the distance cannot be greater than 3.
