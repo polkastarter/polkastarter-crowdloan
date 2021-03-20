@@ -14,7 +14,7 @@ import useWallet from 'hooks/useWallet'
 import {toPlunk} from 'services/utils'
 import Notification from 'components/Notification'
 
-const CreateCrowdloan = props => {
+const RegisterParachain = props => {
   const {api} = usePolkadot()
   const [loading, setLoading] = useState(false)
   const [notification, setNotification] = useState({})
@@ -24,48 +24,43 @@ const CreateCrowdloan = props => {
   const submitTransaction = async data => {
     setLoading(true)
     const {
-      index,
-      cap,
-      firstSlot,
-      lastSlot,
-      end
+      paraId,
+      genesisHead,
+      validationCode
     } = data
   
     try {
       const txResult = await signAndSend(
-        api.tx.crowdloan.create(
-          index,
-          toPlunk(cap),
-          firstSlot,
-          lastSlot,
-          end,
-          null
+        api.tx.registrar.register(
+          paraId,
+          genesisHead,
+          validationCode
         )
       )
 
       const errors = await decodeErrors(api, txResult)
       if(errors.length > 0) {
         setNotification({
-          message: `Error while creating a new campaign ${errors[0].message || errors[0]}`,
+          message: `Error while registering a new parachain ${errors[0].message || errors[0]}`,
           type: 'error'
         })
       }
       else {
         setNotification({
-          message: `Successfully created a new campaign`,
+          message: `Successfully registered a new parachain`,
           type: 'info'
         })
       }
     }
     catch(error) {
       setNotification({
-        message: `Error while creating a new campaign ${error.message}`,
+        message: `Error while registering a new parachain ${error.message}`,
         type: 'error'
       })
     }
     finally{
       setLoading(false)
-      reset({index: '', cap: '', firstSlot: '', lastSlot: '', end: ''})
+      reset({paraId: '', genesisHead: '', validationCode: '', })
     }
   }
 
@@ -73,18 +68,18 @@ const CreateCrowdloan = props => {
     <GridContainer>
       <Card>
         <CardHeader style={{backgroundColor: '#212112', color: '#fff'}}>
-          <h4>Create Crowdloan Campaign</h4>
+          <h4>Register Parachain</h4>
         </CardHeader>
         <CardBody>
           <GridContainer>
             <GridItem xs={12}>
               <Controller
-                name='index'
+                name='paraId'
                 control={control}
                 ref={register({required: true})} 
                 render={({onChange, value}) => (
                   <InputBase
-                    placeholder='Index'
+                    placeholder='ParaID'
                     type='number'
                     value={value}
                     onChange={onChange}
@@ -94,13 +89,13 @@ const CreateCrowdloan = props => {
             </GridItem>
             <GridItem xs={12}>
               <Controller
-                name='cap'
+                name='genesisHead'
                 control={control}
                 ref={register({required: true})} 
                 render={({onChange, value}) => (
                   <InputBase
-                    placeholder='Cap'
-                    type='number'
+                    style={{width: '100%'}}
+                    placeholder='Genesis Head'
                     value={value}
                     onChange={onChange}
                   />
@@ -109,43 +104,13 @@ const CreateCrowdloan = props => {
             </GridItem>
             <GridItem xs={12}>
               <Controller
-                name='firstSlot'
+                name='validationCode'
                 control={control}
                 ref={register({required: true})} 
                 render={({onChange, value}) => (
                   <InputBase
-                    placeholder='First Slot'
-                    type='number'
-                    value={value}
-                    onChange={onChange}
-                  />
-                )}
-              />
-            </GridItem>
-            <GridItem xs={12}>
-              <Controller
-                name='lastSlot'
-                control={control}
-                ref={register({required: true})} 
-                render={({onChange, value}) => (
-                  <InputBase
-                    placeholder='Last Slot'
-                    type='number'
-                    value={value}
-                    onChange={onChange}
-                  />
-                )}
-              />
-            </GridItem>
-            <GridItem xs={12}>
-              <Controller
-                name='end'
-                control={control}
-                ref={register({required: true})} 
-                render={({onChange, value}) => (
-                  <InputBase
-                    placeholder='End'
-                    type='number'
+                    style={{width: '100%'}}
+                    placeholder='Validation Code'
                     value={value}
                     onChange={onChange}
                   />
@@ -159,7 +124,7 @@ const CreateCrowdloan = props => {
             onClick={handleSubmit(submitTransaction)}
             loading={loading}
           >
-            Create
+            Register
           </AsyncButton>
         </CardFooter>
       </Card>
@@ -172,4 +137,4 @@ const CreateCrowdloan = props => {
   )
 }
 
-export default React.memo(CreateCrowdloan)
+export default React.memo(RegisterParachain)

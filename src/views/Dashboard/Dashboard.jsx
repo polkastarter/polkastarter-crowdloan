@@ -21,7 +21,8 @@ import CardIcon from "components/Card/CardIcon.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import {usePolkadot} from '../context/PolkadotContext'
 import CreateCrowdloan from './CreateCrowdloan'
-import {toNumber, toUnit} from 'services/utils'
+import RegisterParachain from './RegisterParachain'
+import {toNumber, toUnit, normalizeNumericValue} from 'services/utils'
 import {listenBalanceChange} from 'services/balance'
 import {getFundCount} from 'services/crowdloan'
 import Campaigns from './Campaigns'
@@ -36,8 +37,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     const run = async () => {
-      const count = await getFundCount(api)
-      setFundCount(toNumber(count))
+      // const count = await getFundCount(api)
+      const count = 2;
+      setFundCount(count)
     }
 
     loaded && run()
@@ -49,7 +51,7 @@ export default function Dashboard() {
     const run = async () => {
       const accountPair = accountPairs[accountPairs.length - 1]
       unsub = await listenBalanceChange(api, accountPair.address, balance => {
-        setBalance(toUnit(balance))
+        setBalance(toUnit(normalizeNumericValue(balance)))
       })
     }
 
@@ -97,6 +99,9 @@ export default function Dashboard() {
               <h3 className={classes.cardTitle}>{blockNumber}</h3>
             </CardHeader>
           </Card>
+        </GridItem>
+        <GridItem xs={12}>
+          <RegisterParachain />
         </GridItem>
         <GridItem xs={12}>
           <CreateCrowdloan />

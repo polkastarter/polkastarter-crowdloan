@@ -103,7 +103,6 @@
   "bugs": {
     "url": "https://github.com/creativetimofficial/material-dashboard-react/issues"
   },
-  "homepage": "https://creativetimofficial.github.io/material-dashboard-react/#/dashboard",
   "devDependencies": {
     "@babel/preset-react": "^7.12.13",
     "babel-plugin-import-rename": "^1.0.1",
