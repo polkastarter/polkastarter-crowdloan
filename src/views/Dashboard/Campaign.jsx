@@ -41,7 +41,7 @@ const Campaign = props => {
     run()
   }, [blockNumber])
 
-  const getRaised = () => fundInfo && toUnit(normalizeNumericValue(fundInfo['raised']))
+  const getRaised = () => fundInfo && toUnit(fundInfo['raised'])
 
   const submitTransaction = async data => {
     try {
@@ -84,11 +84,11 @@ const Campaign = props => {
 
   }
 
-  const getOwner = () => fundInfo && fundInfo['owner'].toString()
-  const getCap = () => fundInfo && toUnit(normalizeNumericValue(fundInfo['cap']))
-  const getEnd = () => fundInfo && normalizeNumericValue(fundInfo['end']).toString()
-  const getFirstSlot = () => fundInfo && normalizeNumericValue(fundInfo['firstSlot']).toString()
-  const getLastSlot = () => fundInfo && normalizeNumericValue(fundInfo['lastSlot']).toString()
+  const getOwner = () => fundInfo && fundInfo['depositor'].toString()
+  const getCap = () => fundInfo && toUnit(fundInfo['cap'])
+  const getEnd = () => fundInfo && fundInfo['end'].toString()
+  const getFirstSlot = () => fundInfo && fundInfo['firstSlot'].toString()
+  const getLastSlot = () => fundInfo && fundInfo['lastSlot'].toString()
 
   const renderContributeForm = () => (
     <GridContainer>

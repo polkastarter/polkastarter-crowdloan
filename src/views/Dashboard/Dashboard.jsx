@@ -37,9 +37,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     const run = async () => {
-      // const count = await getFundCount(api)
-      const count = 2;
-      setFundCount(count)
+      const count = localStorage.getItem('fund_count')
+      setFundCount(Number(count))
     }
 
     loaded && run()
@@ -51,7 +50,7 @@ export default function Dashboard() {
     const run = async () => {
       const accountPair = accountPairs[accountPairs.length - 1]
       unsub = await listenBalanceChange(api, accountPair.address, balance => {
-        setBalance(toUnit(normalizeNumericValue(balance)))
+        setBalance(toUnit(balance))
       })
     }
 

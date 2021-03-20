@@ -55,6 +55,9 @@ const CreateCrowdloan = props => {
           message: `Successfully created a new campaign`,
           type: 'info'
         })
+
+        const count = localStorage.getItem('fund_count')
+        localStorage.setItem('fund_count', Number(count || 0) + 1)
       }
     }
     catch(error) {
