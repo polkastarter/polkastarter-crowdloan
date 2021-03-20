@@ -121,7 +121,7 @@ yarn global add polkadot-launch
 
 To use polkadot-launch, you need to have binary files for a `polkadot` relay chain and a `rococo-collator`.
 
-You can generate these files by cloning the projects
+You can generate these files by cloning the projects and building it. 
 
 ```jsx
 git clone -b git@github.com:paritytech/polkadot.git
@@ -131,25 +131,15 @@ cargo build --release
 
 This will take some time. Once finished you can access the binary file under target > release > polkadot. 
 
-Copy that file into a specific directory
+Alternatively, you can download a pre-built binary here
+
+<TODO>
+
+Copy the binary into a specific directory
 
 ```jsx
 mkdir ../binaries
 cp target/release/polkadot ../binaries/polkadot
-```
-
-Build the binaries for the collators running on local parachains
-
-```jsx
-git clone -b rococo-v1 https://github.com/paritytech/cumulus
-cd cumulus
-cargo build --release -p rococo-collator
-```
-
-Copy the binary file to the correct directory
-
-```jsx
-cp target/release/rococo-collator ../binaries/rococo-collator
 ```
 
 Clone the polkadot-launch repo and change the config file
@@ -210,7 +200,7 @@ Finally, start the relay chain along with the parachains
 polkadot-launch config.json
 ```
 
-Now you have a running instance of a local Kusama runtime and some test parachains running alongside. 
+Now you have a running instance of a local Westend runtime.
 
 One simple an effective way to start interacting with the runtime is by using the Polkadot.js App which is essentially a generic DApp which you can use to quickly view any Polkadot runtime.
 
