@@ -222,23 +222,23 @@ yarn start
 
 Now if you open your browser at [http://localhost:3000](http://localhost:3000) you can see the 
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.54.51.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.54.51.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.54.51.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.54.51.png)
 
 This is very powerful UI which acts as an explorer, a DApp that you can use to send extrinsic, query the runtime state, participate in governance and many more.
 
 By default the DApp will be connected to one of the mainnet networks. However, in our case we would like to interact with the local network we just launched. To do so we would need to click on the top right corner and change the rpc node to the local instance.
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.55.15.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.55.15.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.55.15.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.55.15.png)
 
 Polkadot launch started three validator instances; one of those instances is running an RPC endpoint at ws://127.0.0.1:9944
 
 Now click on the switch button and you'll be connected to the local network.
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.59.28.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.59.28.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.59.28.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_11.59.28.png)
 
 We will first need to register the Parachain with the Registar module. This is a simple extrinsic which we can send via the Apps UI. Select Developer > Extrinsics from the menu and select registar from the dropdown.
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_14.34.34.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_14.34.34.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_14.34.34.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_14.34.34.png)
 
 Use the following value for the genesis_head and validator_code:
 
@@ -246,7 +246,7 @@ Use the following value for the genesis_head and validator_code:
 
 Finally you can start interacting with the crowdloan module via the generic extrinsic UI. Select crowloan module from the dropdown.
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_14.36.19.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_14.36.19.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_14.36.19.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_14.36.19.png)
 
 We have built a separate DApp that is purely for the purpose of the purpose of interacting with the crowdloan module. However, we can still use the above UI to create a new campaign. 
 
@@ -258,15 +258,15 @@ Click Sign and Submit and the signed transaction will be submitted to the relay 
 
 Now let's switch to Alice's account and make contribution to this fund.
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.37.52.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.37.52.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.37.52.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.37.52.png)
 
 Again click Submit Transaction and then Sign and Send.
 
 We can check the status of a fund by sending a query. Select Developer > Chain State. Select crowdloan and funds from the two drop downs and enter 0, which is the index of the fund we created (fund index is a monotonic value that increments every time a new fund is created)
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_15.00.27.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_15.00.27.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_15.00.27.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-16_at_15.00.27.png)
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.39.51.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.39.51.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.39.51.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.39.51.png)
 
 ### Running the DApp
 
@@ -280,15 +280,15 @@ In addition to that, we would need to fund the wallet we just created with some 
 
 Select accounts form the menu and click the send button next to Alice name.
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.36.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.36.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.36.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.36.png)
 
 Then copy the address of the account by clicking on the browser extention we just installed.
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.46.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.46.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.46.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.46.png)
 
 Finally enter the amount you want to send from Alice's account to the new account and click make transfer. 
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.59.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.59.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.59.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-06_at_12.48.59.png)
 
 Ok now that the new account has got some fund, let's clone the DApp 
 
@@ -305,7 +305,7 @@ Now visit [http://localhost:3000](https://localhost:3000)
 
 The DApp allows users to register the parachain for which the campaign will be created with the Registar module.
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-20_at_08.03.08.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-20_at_08.03.08.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-20_at_08.03.08.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-20_at_08.03.08.png)
 
 For testing purposes you can use the following value for the genesis head and validation code inputs; the paraId is a monotonic numeric value starting from 0.
 
@@ -315,7 +315,7 @@ The second step once the parachain is registered, is to create a new crowload ca
 
 After creating a campaign user will be able to interact with it by sending a contribution, for example.
 
-![Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-20_at_08.03.23.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-20_at_08.03.23.png)
+![./imgs/Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-20_at_08.03.23.png](Polkastarter%20bc9795cc77f040ba91f567bcbae3ebf4/Screenshot_2021-03-20_at_08.03.23.png)
 
 ## References
 
