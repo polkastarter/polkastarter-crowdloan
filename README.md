@@ -133,7 +133,7 @@ This will take some time. Once finished you can access the binary file under tar
 
 Alternatively, you can download a pre-built binary here
 
-<TODO>
+https://drive.google.com/file/d/1lwkSjOnS1uJxUUfaXj6-zbVU0X7fVbK4
 
 Copy the binary into a specific directory
 
@@ -283,7 +283,7 @@ Finally enter the amount you want to send from Alice's account to the new accoun
 
 Ok now that the new account has got some fund, let's clone the DApp 
 
-TODO:: add the Polkastarter crowdloan DApp repo
+https://github.com/polkastarter/polkastarter-crowdloan
 
 Install the dependencies and run the DApp
 
