@@ -37,7 +37,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const run = async () => {
-      const count = localStorage.getItem('fund_count')
+      const count = localStorage.getItem('fund_count') || 1
       setFundCount(Number(count))
     }
 

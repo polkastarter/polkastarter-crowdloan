@@ -308,6 +308,23 @@ After creating a campaign user will be able to interact with it by sending a con
 
 ![./imgs/Screenshot_2021-03-20_at_08.03.23.png](./imgs/Screenshot_2021-03-20_at_08.03.23.png)
 
+Update
+===
+The crowdloan module has been recenly (after the PR was opened) deployed to Rococo testnet. Thus you could directly connect to that network and test the same functionality.
+
+We have update the config.js file to point to Rococo
+
+```
+export default {
+  APP_NAME: 'Polkastarter Crowdloan',
+  WS_PROVIDER:  'wss://rococo-rpc.polkadot.io', // 'ws://localhost:9944',
+  DEVELOPMENT_KEYRING: true
+}
+
+```
+
+We have also created a new crowdloan campaign and registered a parachain with if 0.
+
 ## References
 
 1. Polkadot fork including the integration of the crowdloan module into the Kusama runtime [https://github.com/Apocentre/polkadot/pull/1/files](https://github.com/Apocentre/polkadot/pull/1/files)
