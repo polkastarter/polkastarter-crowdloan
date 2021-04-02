@@ -323,7 +323,7 @@ export default {
 
 ```
 
-We have also created a new crowdloan campaign and registered a parachain with if 0.
+We have also created a new crowdloan campaign and registered a parachain with if id 155.
 
 ## References
 
