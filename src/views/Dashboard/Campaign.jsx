@@ -34,12 +34,14 @@ const Campaign = props => {
 
   useEffect(() => {
     const run = async () => {
-      const fund = await getFund(api, fundIndex)
-      setFundInfo(fund.unwrapOr(null))
+      if(api) {
+        const fund = await getFund(api, fundIndex)
+        setFundInfo(fund.unwrapOr(null))
+      }
     }
 
     run()
-  }, [blockNumber])
+  }, [blockNumber, api])
 
   const getRaised = () => fundInfo && toUnit(fundInfo['raised'])
 

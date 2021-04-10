@@ -21,8 +21,8 @@ How to use
 
 3. Visit the campaign page. Currently the following crowdloan campaigns exist:
 
-- http://localhost:3000/campaigns/0
-- http://localhost:3000/campaigns/1
-- http://localhost:3000/campaigns/2
-- http://localhost:3000/campaigns/3
-- http://localhost:3000/campaigns/4
+- http://localhost:3000/campaigns/1000
+- http://localhost:3000/campaigns/1001
+- http://localhost:3000/campaigns/1002
+- http://localhost:3000/campaigns/1003
+- http://localhost:3000/campaigns/1004

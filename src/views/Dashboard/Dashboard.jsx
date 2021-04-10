@@ -70,7 +70,7 @@ export default function Dashboard(props) {
             </CardHeader>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={6} md={3}>
+        {/* <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
               <CardIcon color="warning">
@@ -82,7 +82,7 @@ export default function Dashboard(props) {
               </h3>
             </CardHeader>
           </Card>
-        </GridItem>
+        </GridItem> */}
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="success" stats icon>
