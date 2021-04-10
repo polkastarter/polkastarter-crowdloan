@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from "react";
-// react plugin for creating charts
-// @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
-import Store from "@material-ui/icons/Store";
-import {formatBalance} from '@polkadot/util'
 import WidgetsIcon from '@material-ui/icons/Widgets'
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
@@ -15,25 +9,26 @@ import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
-// import CardBody from "components/Card/CardBody.js";
-
+import Campaign from './Campaign'
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import {usePolkadot} from '../context/PolkadotContext'
 import CreateCrowdloan from './CreateCrowdloan'
 import RegisterParachain from './RegisterParachain'
-import {toNumber, toUnit, normalizeNumericValue} from 'services/utils'
+import {toUnit} from 'services/utils'
 import {listenBalanceChange} from 'services/balance'
-import {getFundCount} from 'services/crowdloan'
 import Campaigns from './Campaigns'
 
 const useStyles = makeStyles(styles);
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const [fundCount, setFundCount] = useState('')
   const [balance, setBalance] = useState('')
   const classes = useStyles()
   const {api, blockNumber, accountPairs, loaded} = usePolkadot()
+  const {
+    match: {params: {paraId}}
+  } = props;
 
   useEffect(() => {
     const run = async () => {
@@ -99,14 +94,17 @@ export default function Dashboard() {
             </CardHeader>
           </Card>
         </GridItem>
-        <GridItem xs={12}>
+        {/* <GridItem xs={12}>
           <RegisterParachain />
-        </GridItem>
-        <GridItem xs={12}>
+        </GridItem> */}
+        {/* <GridItem xs={12}>
           <CreateCrowdloan />
-        </GridItem>
-        <GridItem xs={12}>
+        </GridItem> */}
+        {/* <GridItem xs={12}>
           {loaded ? <Campaigns fundCount={fundCount}/> : null}
+        </GridItem> */}
+        <GridItem xs={12}>
+          <Campaign fundIndex={paraId} />
         </GridItem>
       </GridContainer>
     </div>

@@ -21,7 +21,7 @@ import DashboardPage from "views/Dashboard/Dashboard";
 
 const dashboardRoutes = [
   {
-    path: "/",
+    path: "/:paraId",
     name: "Crowdloans",
     icon: Dashboard,
     component: DashboardPage,
