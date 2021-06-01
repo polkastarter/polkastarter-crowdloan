@@ -219,7 +219,7 @@ This is very powerful UI which acts as an explorer, a DApp that you can use to s
 
 By default the DApp will be connected to one of the mainnet networks. However, in our case we would like to interact with the local network we just launched. To do so we would need to click on the top right corner and change the rpc node to the local instance.
 
-![./imgs/Screenshot_2021-03-06_at_11.55.15.png](./imgs/Screenshot_2021-03-06_at_11.55.15.png)
+![imgs/Screenshot_2021-03-06_at_11.55.15.png](./imgs/Screenshot_2021-03-06_at_11.55.15.png)
 
 Polkadot launch started three validator instances; one of those instances is running an RPC endpoint at ws://127.0.0.1:9944
 
