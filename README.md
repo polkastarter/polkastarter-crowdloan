@@ -139,11 +139,10 @@ Contribute any value and you should see a success message
 
 ## References
 
-1. Polkadot fork including the integration of the crowdloan module into the Kusama runtime [https://github.com/Apocentre/polkadot/pull/1/files](https://github.com/Apocentre/polkadot/pull/1/files)
-2. [https://github.com/paritytech/polkadot-launch](https://github.com/paritytech/polkadot-launch)
-3. [https://github.com/paritytech/cumulus](https://github.com/paritytech/cumulus)
-4. [https://polkadot.js.org/apps/](https://polkadot.js.org/apps/)
-5. [https://github.com/polkadot-js/apps](https://github.com/polkadot-js/apps)
-6. [https://polkadot.js.org/api](https://polkadot.js.org/docs/api/)
-7. [https://github.com/polkadot-js/api](https://github.com/polkadot-js/api)
-8. [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/)
+1. [https://github.com/paritytech/polkadot-launch](https://github.com/paritytech/polkadot-launch)
+2. [https://github.com/paritytech/cumulus](https://github.com/paritytech/cumulus)
+3. [https://polkadot.js.org/apps/](https://polkadot.js.org/apps/)
+4. [https://github.com/polkadot-js/apps](https://github.com/polkadot-js/apps)
+5. [https://polkadot.js.org/api](https://polkadot.js.org/docs/api/)
+6. [https://github.com/polkadot-js/api](https://github.com/polkadot-js/api)
+7. [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/)
