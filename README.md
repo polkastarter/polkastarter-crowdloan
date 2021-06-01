@@ -1,12 +1,12 @@
-Setting Up the Environment
-===
-1. Setup up Polkadot with Polkadot Launch
+### Running an instance of Rococo Locally
+
 
 We used the following documentation to set up our Polkadot Rococo testing environment:
 https://github.com/paritytech/polkadot-launch
 
-The config.json we used is the following:
-```
+The config.json file we used was the following:
+
+```jsx
 {
  "relaychain": {
   "bin": "../crowdloans/binaries/polkadot",
@@ -50,25 +50,107 @@ The config.json we used is the following:
 }
 ```
 
-2. Configure a Test Crowdloan
+Finally, start the relay chain along with the parachains
 
-https://app.element.io/#/room/#rococo-faucet:matrix.org
+```jsx
+polkadot-launch config.json
+```
 
-How to use
-===
+Now you have a running instance of a local Rococo runtime.
 
-1. Install deps
+One simple an effective way to start interacting with the runtime is by using the Polkadot.js App which is essentially a generic DApp which you can use to quickly view any Polkadot runtime.
 
-`yarn install` or `npm install`
+```jsx
+git clone git@github.com:polkadot-js/apps.git
+cd apps
+yarn install
+yarn start
+```
 
-2. Run the DApp
+Now if you open your browser at [http://localhost:3000](http://localhost:3000) you should see the chain explorer
 
-`yarn start`
+By default the DApp will be connected to one of the mainnet networks. However, in our case we would like to interact with the local network we just launched. To do so we would need to click on the top right corner and change the rpc node to the local instance.
 
-3. Visit the campaign page. Currently the following crowdloan campaigns exist:
 
-- http://localhost:3000/campaigns/1000
-- http://localhost:3000/campaigns/1001
-- http://localhost:3000/campaigns/1002
-- http://localhost:3000/campaigns/1003
-- http://localhost:3000/campaigns/1004
+Polkadot launch started three validator instances; one of those instances is running an RPC endpoint at ws://127.0.0.1:9944
+
+Now click on the switch button and you'll be connected to the local network.
+
+
+We will first need to register the Parachain with the Registar module. This is a simple extrinsic which we can send via the Apps UI. Select Developer > Extrinsics from the menu and select registar from the dropdown.
+
+Use the following value for the genesis_head and validator_code:
+
+0x0061736d01000000cd6d45e38e62e341984996592474b685b080e7aae796363f
+
+Finally you can start interacting with the crowdloan module via the generic extrinsic UI. Select crowloan module from the dropdown.
+
+We have built a separate DApp that is purely for the purpose of the purpose of interacting with the crowdloan module. However, we can still use the above UI to create a new campaign. 
+
+Fill out the above form with some values (check the meaning of each property in the section above) and click Submit Transaction.
+
+[]()
+
+Click Sign and Submit and the signed transaction will be submitted to the relay chain. The result of the transaction is a new campaign created and registered. 
+
+Now let's switch to Alice's account and make contribution to this fund.
+
+
+Again click Submit Transaction and then Sign and Send.
+
+We can check the status of a fund by sending a query. Select Developer > Chain State. Select crowdloan and funds from the two drop downs and enter 0, which is the index of the fund we created (fund index is a monotonic value that increments every time a new fund is created)
+
+### Running the DApp
+
+We demonstrated how one can create, contribute and query the fund data using the generic PolkadotJS DApp. However, we have built a custom DApp which is much simpler and it let's users directly interact with a fund. It also allows anyone to create a new fund.
+
+To make any interactions with the DApp, the polkadot browser extension will have to be installed on the users machine and follow the steps to create a new account.
+
+One can download it from [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/)
+
+In addition to that, we would need to fund the wallet we just created with some DOT so we can interact with the relay chain. Luckily as we saw earlier, the local network we launched does have some test account with some funds. We can use the PolkadotJS DApp to transfer some amount to the newly created account.
+
+Select accounts form the menu and click the send button next to Alice name.
+
+Then copy the address of the account by clicking on the browser extention we just installed.
+
+Finally enter the amount you want to send from Alice's account to the new account and click make transfer. 
+
+Ok now that the new account has got some fund, let's clone the DApp 
+
+https://github.com/polkastarter/polkastarter-crowdloan
+
+Install the dependencies and run the DApp
+
+```jsx
+yarn install
+yarn start
+```
+
+Now visit [http://localhost:3000](https://localhost:3000) 
+
+The DApp allows users to register the parachain for which the campaign will be created with the Registar module.
+
+![./imgs/Screenshot_2021-03-20_at_08.03.08.png](./imgs/Screenshot_2021-03-20_at_08.03.08.png)
+
+For testing purposes you can use the following value for the genesis head and validation code inputs; the paraId is a monotonic numeric value starting from 0.
+
+0x0061736d01000000cd6d45e38e62e341984996592474b685b080e7aae796363f
+
+The second step once the parachain is registered, is to create a new crowload campaign using the form.
+
+After creating a campaign user will be able to interact with it by sending a contribution, for example.
+
+![./imgs/Screenshot_2021-03-20_at_08.03.23.png](./imgs/Screenshot_2021-03-20_at_08.03.23.png)
+
+
+## References
+
+1. Polkadot fork including the integration of the crowdloan module into the Kusama runtime [https://github.com/Apocentre/polkadot/pull/1/files](https://github.com/Apocentre/polkadot/pull/1/files)
+2. [https://github.com/paritytech/polkadot-launch](https://github.com/paritytech/polkadot-launch)
+3. [https://github.com/paritytech/cumulus](https://github.com/paritytech/cumulus)
+4. [https://polkadot.js.org/apps/](https://polkadot.js.org/apps/)
+5. [https://github.com/polkadot-js/apps](https://github.com/polkadot-js/apps)
+6. [https://polkadot.js.org/api](https://polkadot.js.org/docs/api/)
+7. [https://github.com/polkadot-js/api](https://github.com/polkadot-js/api)
+8. [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/)
