@@ -1,10 +1,56 @@
-Pre-requisites
+Setting Up the Environment
 ===
-1. You should have the Polkadot browser extension installed
+1. Setup up Polkadot with Polkadot Launch
 
-https://polkadot.js.org/extension/
+We used the following documentation to set up our Polkadot Rococo testing environment:
+https://github.com/paritytech/polkadot-launch
 
-2. You need to have some ROC which you can get from here
+The config.json we used is the following:
+```
+{
+ "relaychain": {
+  "bin": "../crowdloans/binaries/polkadot",
+  "chain": "rococo-local",
+  "nodes": [
+   {
+    "name": "alice",
+    "wsPort": 9944,
+    "port": 30444
+   },
+   {
+    "name": "bob",
+    "wsPort": 9955,
+    "port": 30555
+   },
+   {
+    "name": "charlie",
+    "wsPort": 9966,
+    "port": 30666
+   },
+   {
+    "name": "dave",
+    "wsPort": 9977,
+    "port": 30777
+   }
+  ]
+ },
+ "parachains": [
+  ],
+  "simpleParachains": [],
+ "hrmpChannels": [
+  {
+   "sender": 200,
+   "recipient": 300,
+   "maxCapacity": 8,
+   "maxMessageSize": 512
+  }
+ ],
+ "types": {},
+ "finalization": false
+}
+```
+
+2. Configure a Test Crowdloan
 
 https://app.element.io/#/room/#rococo-faucet:matrix.org
 
