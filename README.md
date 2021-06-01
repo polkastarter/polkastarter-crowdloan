@@ -129,22 +129,13 @@ yarn install
 yarn start
 ```
 
-Now visit [http://localhost:3000](https://localhost:3000) 
+Now visit [http://localhost:3000](https://localhost:3000)  (Or the other suggested port if there was a port conflict)
 
-The DApp allows users to register the parachain for which the campaign will be created with the Registar module.
+The DApp allows users to to contribute to the crowdloan.
 
-![./imgs/Screenshot_2021-03-20_at_08.03.08.png](./imgs/Screenshot_2021-03-20_at_08.03.08.png)
+Click on Crowdloans and replace the paraId parameter on the URL with the same one you created back on the chain explorer
 
-For testing purposes you can use the following value for the genesis head and validation code inputs; the paraId is a monotonic numeric value starting from 0.
-
-0x0061736d01000000cd6d45e38e62e341984996592474b685b080e7aae796363f
-
-The second step once the parachain is registered, is to create a new crowload campaign using the form.
-
-After creating a campaign user will be able to interact with it by sending a contribution, for example.
-
-![./imgs/Screenshot_2021-03-20_at_08.03.23.png](./imgs/Screenshot_2021-03-20_at_08.03.23.png)
-
+Contribute any value and you should see a success message
 
 ## References
 
